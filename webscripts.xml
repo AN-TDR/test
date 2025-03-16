@@ -1,0 +1,11 @@
+<doc>
+	<webscript type="ansible" name="Test">
+		<settings>
+			<filename>test.tgz</filename>
+			<playbook>playbook.yml</playbook>
+		</settings>
+		<mgr>
+			<minimal_version>6.0.0</minimal_version>
+		</mgr>
+	</webscript>
+</doc>
