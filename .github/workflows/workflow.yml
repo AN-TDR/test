@@ -19,8 +19,8 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build images
         run: |
-          docker build -t api:2025 --target=api:2025 --build-arg user=martin --build-arg uid=1000 -f ./api/Dockerfile .
-          docker tag api:2025 cr.selcloud.ru/mj-registry/api:2025
+          docker build -t api:3.0 --target=api --build-arg user=martin --build-arg uid=1000 -f ./api/Dockerfile .
+          docker tag api:3.0 cr.selcloud.ru/mj-registry/api:3.0
       - name: Push images
         run: |
-          docker push cr.selcloud.ru/mj-registry/api:2025
+          docker push cr.selcloud.ru/mj-registry/api:3.0
