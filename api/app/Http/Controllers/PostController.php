@@ -32,10 +32,6 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        if (!$post->is_published) {
-            abort(Response::HTTP_NOT_FOUND);
-        }
-
         return PostResource::make($post);
     }
 
@@ -89,11 +85,9 @@ class PostController extends Controller
         if ($file) {
             $filename = Str::slug($post->title, '_') . '-' . $post->id . '.' . $file->extension();
 
-            $path = storage_path('app/public/post_cover_photos');
+            $file->storeAs('post_cover_photos', $filename);
 
-            $file->move($path, $filename);
-
-            $post->cover_photo_path = $path . '/' . $filename;
+            $post->cover_photo_path = 'post_cover_photos' . DIRECTORY_SEPARATOR . $filename;
 
             $post->save();
         }

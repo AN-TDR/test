@@ -33,17 +33,4 @@ class PublishPostTest extends TestCase
         $this->getJson(route('posts.show', ['post' => $post]))
             ->assertStatus(Response::HTTP_OK);
     }
-
-    /** @test */
-    public function it_should_return_404_if_post_is_unpublished()
-    {
-        $user = User::factory()->create();
-
-        $post = Post::factory()->unpublished()->create();
-
-        $this->actingAs($user);
-
-        $this->getJson(route('posts.show', ['post' => $post]))
-            ->assertStatus(Response::HTTP_NOT_FOUND);
-    }
 }

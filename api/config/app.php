@@ -188,6 +188,8 @@ return [
          * Package Service Providers...
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Spatie\Health\HealthServiceProvider::class,
+//        Rollbar\Laravel\RollbarServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -197,7 +199,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        App\Providers\HealthCheckServiceProvider::class,
     ],
 
     /*
