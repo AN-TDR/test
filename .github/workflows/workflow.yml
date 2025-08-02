@@ -10,25 +10,25 @@ env:
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
-  build-backend-images:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: docker/login-action@v2
-        with:
-          registry: cr.selcloud.ru/mj-registry
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build images
-        run: |
-          docker build -t api:3.0 --target=api --build-arg user=martin --build-arg uid=1000 -f ./api/Dockerfile .
-          docker tag api:3.0 cr.selcloud.ru/mj-registry/api:3.0
-      - name: Push images
-        run: |
-          docker push cr.selcloud.ru/mj-registry/api:3.0
+  # build-backend-images:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: docker/login-action@v2
+  #       with:
+  #         registry: cr.selcloud.ru/mj-registry
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     - name: Build images
+  #       run: |
+  #         docker build -t api:3.0 --target=api --build-arg user=martin --build-arg uid=1000 -f ./api/Dockerfile .
+  #         docker tag api:3.0 cr.selcloud.ru/mj-registry/api:3.0
+  #     - name: Push images
+  #       run: |
+  #         docker push cr.selcloud.ru/mj-registry/api:3.0
   deploy-prod:
     runs-on: ubuntu-latest
-    needs: [ "build-backend-images" ]
+    # needs: [ "build-backend-images" ]
     steps:
       - uses: actions/checkout@v3
       - name: Install kubectl
@@ -38,6 +38,7 @@ jobs:
           echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
           chmod +x kubectl
           mv ./kubectl /usr/local/bin
-          kubectl version --output=yaml
           echo "${{ secrets.KUBE_CONFIG }}" | > $HOME/.kube/config
+          cat $HOME/.kube/config
+          kubectl version --output=yaml
           kubectl get pods
