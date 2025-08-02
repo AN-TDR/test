@@ -38,7 +38,7 @@ jobs:
           echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
           chmod +x kubectl
           mv ./kubectl /usr/local/bin
-          echo "${{ secrets.KUBE_CONFIG }}" | > $HOME/.kube/config
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
           cat $HOME/.kube/config
           kubectl version --output=yaml
           kubectl get pods
